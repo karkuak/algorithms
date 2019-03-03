@@ -1,0 +1,29 @@
+class Solution {
+    public int findJudge(int N, int[][] trust) {
+        if (trust.length==0) return 1;
+        boolean foundJudge=false;
+        int judge=-1;
+        HashMap<Integer,Integer> trustCounts = new HashMap<Integer,Integer>();
+        
+         for(int i=0; i<trust.length;i++){
+             
+             if(trustCounts.containsKey(trust[i][1])) trustCounts.put(trust[i][1],trustCounts.get(trust[i][1])+1);
+             else trustCounts.put(trust[i][1],1);
+         }
+        
+        for(int i: trustCounts.keySet()){
+            if(trustCounts.get(i)==N-1){
+                if(foundJudge) return -1;
+                judge=i;
+                foundJudge=true;
+            }
+            
+        }
+        
+        for(int i=0; i<trust.length;i++){
+           if(trust[i][0]==judge) return -1;
+         }
+        
+       return judge;
+    }
+}
