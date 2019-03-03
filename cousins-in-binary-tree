@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isCousins(TreeNode root, int x, int y) {
+        int[][] depths = new int[2][2];
+        for(int[] row:depths)Arrays.fill(row,-1);
+        depths= isCousins(root,new TreeNode(-1), x, y, depths, 0);
+        
+        //for(int[]row:depths)for(int i: row) System.out.println(i);
+        if(depths[0][0]==depths[1][0]&&depths[0][1]!=depths[1][1]) return true;
+        else return false;
+        
+    }
+    
+    public int[][] isCousins(TreeNode root,TreeNode parent, int x, int y, int[][] depths, int counter) {
+       if(root==null) return depths;
+       
+        if(depths[0][0]==-1||depths[1][0]==-1){
+            if(root.val==x){depths[0][0]= counter;depths[0][1]= parent.val;}
+            if(root.val==y){depths[1][0]= counter;depths[1][1]= parent.val;}
+            counter++;
+             //System.out.println(x+" "+y+" "+root.val);
+            depths=isCousins(root.left,root, x, y, depths, counter);
+            depths=isCousins(root.right,root, x, y, depths, counter);
+            return depths;
+        }
+        else{
+            return depths;
+        }
+        
+    }
+}
